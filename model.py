@@ -137,8 +137,12 @@ for b in range(B):
         xprev = x[b,:t + 1] # (t+1, C)
         xbow[b, t] = torch.mean(xprev, 0)
 
-weight = torch.tril(torch.ones(T, T))
-weight = weight/weight.sum(1, keepdim=True)
+tril = torch.tril(torch.ones(T, T))
+
+print(tril == 0)
+weight = torch.zeros(T, T)
+weight = weight.masked_fill(tril == 0, -float('inf'))
+weight = weight.softmax(dim=1)
 
 xbow2 = weight @ x
 
