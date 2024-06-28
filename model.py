@@ -125,3 +125,22 @@ for g in range(300):
     print('------------------------------------------------------------------------------------')
 '''
 
+torch.manual_seed(1337)
+B, T, C = 4, 8, 2
+
+x = torch.rand(B, T, C)
+
+xbow = torch.zeros((B, T, C))
+
+for b in range(B):
+    for t in range(T):
+        xprev = x[b,:t + 1] # (t+1, C)
+        xbow[b, t] = torch.mean(xprev, 0)
+
+weight = torch.tril(torch.ones(T, T))
+weight = weight/weight.sum(1, keepdim=True)
+
+xbow2 = weight @ x
+
+print(xbow[0])
+print(xbow2[0])
