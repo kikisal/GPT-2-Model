@@ -130,7 +130,7 @@ class FeedForward(nn.Module):
     def forward(self, x):
         return self.net(x)
 
-class BigramLanguageModel(nn.Module):
+class GPT2Model(nn.Module):
     def __init__(self):
         super().__init__()
         
@@ -203,7 +203,7 @@ class Block(nn.Module):
 
         return x
 
-m = BigramLanguageModel()
+m = GPT2Model()
 
 [logits, loss] = m(Xb, Yb)
 
